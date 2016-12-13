@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"  
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd">  
+        <!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供 -->  
+        <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">  
+      
+            <property name="brokerURL" value="tcp://localhost:61616" />  
+            <property name="useAsyncSend" value="true" />  
+            <property name="alwaysSessionAsync" value="true" />  
+            <property name="useDedicatedTaskRunner" value="true" />  
+        </bean>
+        <!-- 发送消息的目的地（一个队列） -->
+        <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">  
+            <!-- 设置消息队列的名字 -->  
+            <constructor-arg value="ymk.queue?consumer.prefetchSize=100" />  
+        </bean>  
+</beans>  
